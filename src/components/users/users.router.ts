@@ -6,7 +6,6 @@ import { auth } from '../../utils/auth';
 
 export const userRouter = express.Router();
 
-
 userRouter.get('/',auth, async ( req: Request, res: Response) => {
   try {
     

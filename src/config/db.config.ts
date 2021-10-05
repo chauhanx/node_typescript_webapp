@@ -27,7 +27,7 @@ const sequelize = new Sequelize({
   dialect: 'postgres',
   username: appConfigs.db.DB_USER,
   password: appConfigs.db.DB_PASS,
-  storage: ':memory:',
+  // storage: ':memory:',
   models: [models]
 });
 

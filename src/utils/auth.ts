@@ -14,7 +14,7 @@ export const auth = async(req,res,next) => {
             res.json(result);
 
     }else{
-        let auth = new Buffer(authHeader.split(' ')[1],'base64').toString().split(':');
+        let auth = Buffer.from(authHeader.split(' ')[1],'base64').toString('ascii').split(':');
         let username = auth[0];
         let password = auth[1];
         // match if username and password are same
