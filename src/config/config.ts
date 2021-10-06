@@ -6,7 +6,6 @@ dotenv.config();
 export const appConfigs =  {
     NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.PORT,
-  
     db: {
       DB_HOST: process.env.DB_HOST,
       DB_USER: process.env.DB_USER,
