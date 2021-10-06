@@ -17,8 +17,7 @@ export const ecryptPass = async(pass)=>{
 };
 // to match user's password
 export const comparePass = async(pass,hash)=>{
-    let result  = await bcrypt.compare(pass,hash);
-    return result;
+    return await bcrypt.compare(pass,hash);
 };
 
 // to send response in format
@@ -35,5 +34,12 @@ export const checkValidEmail = (email) => {
   var filter = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   if (filter.test(email)) return true;
   return false;
+}
+
+export const getUserPassAuth = (authHeader) => {
+    let auth = Buffer.from(authHeader.split(' ')[1],'base64').toString('ascii').split(':');
+    let username = auth[0];
+    let password = auth[1];
+    return {username,password};
 }
 
