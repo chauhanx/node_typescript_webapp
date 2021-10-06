@@ -11,8 +11,8 @@
 ##### 3. PostgreSQl is installed in your system
 
 &nbsp;
-#### Steps to install web app
-##### 1. Clone git repository to your local system and navigate to prject in Terminal using cd webapp
+#### Steps to run web app
+##### 1. Clone git repository to your local system and navigate to the project in Terminal using cd webapp
 ##### 2. Type "npm install"
 ##### 3. Type "npm run dev"
 &nbsp;

@@ -56,7 +56,6 @@ userRouter.post('/', async (req: Request, res: Response) => {
 
 userRouter.patch('/', auth, async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     if (!req.body.username || req.body.id || req.body.account_updated || req.body.account_created) {
       
       const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);

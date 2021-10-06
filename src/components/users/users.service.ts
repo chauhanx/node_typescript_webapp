@@ -38,7 +38,7 @@ export const saveUser = async(data) =>{
         let userExist = await User.findOne(search);
         // to check if user already exist
         if(userExist){
-            return await respMsg(200,MESSAGES.USER_EXIST,[]);
+            return await respMsg(400,MESSAGES.BAD_REQUEST,[]);
         }else{
             data['id'] = await generateId();
             data['password'] = await ecryptPass(data['password']);
