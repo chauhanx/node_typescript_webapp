@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import * as UserService from './users.service';
-import { respMsg, getUserPassAuth } from '../../utils/helper';
+import { respMsg, getUserPassAuth, checkValidEmail } from '../../utils/helper';
 import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
 
@@ -27,7 +27,7 @@ userRouter.get('/',auth, async ( req: Request, res: Response,next) => {
 userRouter.post('/', async (req: Request, res: Response) => {
   try {
 
-    if (!req.body?.first_name || !req.body?.last_name || !req.body?.password || !req.body?.username) {
+    if (!req.body?.first_name || !req.body?.last_name || !req.body?.password || !req.body?.username || !checkValidEmail(req.body.username)) {
 
       const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
 
@@ -55,7 +55,6 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
       
       res.status(msg.statusCode).send(msg);
     } else {
-      
       let authHeader = req.headers.authorization;
       let {username} = await getUserPassAuth(authHeader);
 

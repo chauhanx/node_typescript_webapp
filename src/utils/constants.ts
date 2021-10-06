@@ -24,6 +24,7 @@ export const STATUS_CODE = {
 export const MESSAGES = {
     USER_NOT_EXIST: "User not exist",
     USER_EXIST: "User already exist",
+    INVALID_USER: "Invalid user name",
     USER_ADD_SUCCESS: "User added successfully",
     USER_UPDATED_SUCCESS: "User updated successfully",
     SUCCESS: "Success",

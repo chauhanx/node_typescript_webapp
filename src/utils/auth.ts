@@ -9,6 +9,7 @@ dotenv.config();
 export const auth = async(req,res,next) => {
     let authHeader = req.headers.authorization;
     // check if authorization token is present
+    
      if(!authHeader){
             let result = await respMsg(401,MESSAGES.UNAUTHORIZED,[]);
             res.statusCode = 401;
