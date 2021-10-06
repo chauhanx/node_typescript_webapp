@@ -5,10 +5,12 @@
 
 #### Pre requisites
 ##### 1. NodeJS is installed in your system
+> https://nodejs.org/en/download/
 > Type node -v in your terminal to check nodejs version
 ##### 2. Npm is installed in your system
 > Type npm -v in your terminal to check npm version
 ##### 3. PostgreSQl is installed in your system
+> https://www.postgresql.org/download/
 
 &nbsp;
 #### Steps to run web app
