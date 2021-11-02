@@ -1,4 +1,4 @@
-name: Validate packer template file in a directory
+name: Pull request
 
 on:
   pull_request:
