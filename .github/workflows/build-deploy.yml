@@ -1,0 +1,26 @@
+name: Build & Deploy application
+
+env:
+  ARTIFACT_NAME: abc
+  CODEDEPLOY_APPLICATION_NAME: mywebapp
+  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: mywebapp
+  AWS_REGION: us-east-1
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+    ci_cd:
+      runs-on: ubuntu-latest
+      
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+
+        - uses: actions/setup-node@v2
+          with:
+            node-version: '14'
+      
+        - run: npm install
+        - run: npm test
