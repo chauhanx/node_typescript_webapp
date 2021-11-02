@@ -21,6 +21,27 @@ jobs:
         - uses: actions/setup-node@v2
           with:
             node-version: '14'
-      
+
         - run: npm install
         - run: npm test
+        
+        - name: Build Deployment artifcats
+        - run: |
+            mkdir codedeploy_artifact
+
+            # zip -r ${{env.ARTIFACT_NAME}}
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+           aws-access-key: ${{ secrets.AWS_ACCESS_KEY_ID}}
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+           aws-region: ${{ secrets.AWS_REGION }}
+
+        - name: Copy Artifacts to S3
+          run: |
+            aws s3 sync ./codedeploy_artifact s3://${{ secrets. S3_CODEDEPLOY_BUCKET}}
+
+        # - name: Code Deploy API Call
+        #   run: |
+        #     output
