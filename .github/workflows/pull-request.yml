@@ -1,0 +1,12 @@
+name: Validate packer template file in a directory
+
+on:
+  pull_request:
+    branches: [main]
+jobs:
+    pull_request:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
