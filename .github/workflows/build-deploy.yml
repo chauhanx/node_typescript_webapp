@@ -47,11 +47,8 @@ jobs:
             pwd
             ls -al
             mv ${{ env.ARTIFACT_NAME }}.* codedeploy_artifact
-            ls -al
             pwd
             cd codedeploy_artifact
-            pwd
-            ls -al
             cd ..
             pwd
             ls -al
@@ -59,7 +56,6 @@ jobs:
         - name: Copy Artifacts to S3
           run: |
             aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
-
         - name: Codedeploy API Call
           run: |
             output=$(aws deploy create-deployment \
