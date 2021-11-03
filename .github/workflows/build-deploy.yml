@@ -24,9 +24,14 @@ jobs:
           with:
             node-version: '14'
 
-        - run: npm ci
-        - run: npm run build --if-present
-        - run: npm test
+        - name: Install Node Dependecy
+          run: npm ci
+        
+        - name: Build Node project
+          run: npm run build --if-present
+        
+        - name: Test Node Checks
+          run: npm test
 
         - name: Configure AWS credentials
           uses: aws-actions/configure-aws-credentials@v1
