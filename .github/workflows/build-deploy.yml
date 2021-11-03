@@ -2,10 +2,9 @@ name: Build & Deploy application
 
 env:
   ARTIFACT_NAME: webapp
-  CODEDEPLOY_APPLICATION_NAME: mywebapp
-  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: mywebapp
+  CODEDEPLOY_APPLICATION_NAME: webapp
+  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: csye6225-webapp-deployment
   AWS_REGION: us-east-1
-
 
 on:
   push:
@@ -62,7 +61,7 @@ jobs:
           run: |
             aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
 
-        - name: Codeeploy API Call
+        - name: Codedeploy API Call
           run: |
             output=$(aws deploy create-deployment \
               --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
