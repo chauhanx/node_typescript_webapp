@@ -27,17 +27,17 @@ permissions:
 hooks:
 
   BeforeInstall:
-    - location: ./beforeInstall.sh
+    - location: ./codedeploy/beforeInstall.sh
       timeout: 300
       runas: ubuntu
 
   AfterInstall:
-    - location: ./afterInstall.sh
+    - location: ./codedeploy/afterInstall.sh
       timeout: 300
       runas: ubuntu
 
 
   ApplicationStart:
-    - location: ./applicationStart.sh
+    - location: ./codedeploy/applicationStart.sh
       timeout: 300
       runas: ubuntu
