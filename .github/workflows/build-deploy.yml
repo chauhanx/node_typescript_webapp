@@ -1,7 +1,7 @@
 name: Build & Deploy application
 
 env:
-  ARTIFACT_NAME: build
+  ARTIFACT_NAME: dist
   CODEDEPLOY_APPLICATION_NAME: mywebapp
   CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: mywebapp
   AWS_REGION: us-east-1
