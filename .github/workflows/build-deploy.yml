@@ -1,7 +1,7 @@
 name: Build & Deploy application
 
 env:
-  ARTIFACT_NAME: webapp
+  ARTIFACT_NAME: build
   CODEDEPLOY_APPLICATION_NAME: mywebapp
   CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: mywebapp
   AWS_REGION: us-east-1
@@ -43,6 +43,7 @@ jobs:
         - name: Build Deployment artifacts
           run: |
             mkdir codedeploy_artifact
+            ls -al
             zip -r ${{ env.ARTIFACT_NAME }} package.json codedeploy/*.sh appspec.yml
             pwd
             ls -al
