@@ -69,7 +69,7 @@ jobs:
               --deployment-config-name CodeDeployDefault.AllAtOnce \
               --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP }} \
               --description "CSYE6225 - CodeDeploy" \
-              --s3-location-bucket ${{ secrets.S3_CODEDEPLOY_BUCKET }},key=${{env.ARTIFACT_NAME}},bundleType=zip \
+              --s3-location bucket ${{ secrets.S3_CODEDEPLOY_BUCKET }},key=${{env.ARTIFACT_NAME}},bundleType=zip \
               --region ${{ env.AWS_REGION }}
               --output json)
 
