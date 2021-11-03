@@ -47,7 +47,7 @@ jobs:
             zip -r ${{ env.ARTIFACT_NAME }} dist package.json codedeploy/*.sh appspec.yml
             pwd
             ls -al
-            mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact
+            mv ${{ env.ARTIFACT_NAME }}.zip codedeploy_artifact
             ls -al
             pwd
             cd codedeploy_artifact
