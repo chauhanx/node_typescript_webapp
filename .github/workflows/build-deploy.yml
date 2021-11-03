@@ -56,6 +56,7 @@ jobs:
             pwd
             ls -al
 
+
         - name: Copy Artifacts to S3
         - run: |
             aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
