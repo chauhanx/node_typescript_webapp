@@ -24,7 +24,8 @@ jobs:
           with:
             node-version: '14'
 
-        - run: npm install
+        - run: npm ci
+        - run: npm run build --if-present
         - run: npm test
 
         - name: Configure AWS credentials
@@ -34,13 +35,23 @@ jobs:
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
            aws-region: ${{ secrets.AWS_REGION }}
         
-        # - name: Build Deployment artifacts
-        # - run: |
-        #     mkdir codedeploy_artifact
+        - name: Build Deployment artifacts
+        - run: |
+            mkdir codedeploy_artifact
+            zip -r ${{ env.ARTIFACT_NAME }} build package.json codedeploy/*.sh appspec.yml
+            pwd
+            ls -al
+            mv ${{ env.ARTIFACT_NAME }} codedeploy_artifact
+            ls -al
+            pwd
+            cd codedeploy_artifact
+            pwd
+            ls -al
+            cd ..
+            pwd
+            ls -al
 
-   
-
-        # - name: Copy Artifacts to S3
-        # - run: |
-        #     aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
+        - name: Copy Artifacts to S3
+        - run: |
+            aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
 
