@@ -41,7 +41,7 @@ jobs:
            aws-region: ${{ secrets.AWS_REGION }}
         
         - name: Build Deployment artifacts
-        - run: |
+          run: |
             mkdir codedeploy_artifact
             zip -r ${{ env.ARTIFACT_NAME }} build package.json codedeploy/*.sh appspec.yml
             pwd
@@ -58,6 +58,6 @@ jobs:
 
 
         - name: Copy Artifacts to S3
-        - run: |
+          run: |
             aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
 
