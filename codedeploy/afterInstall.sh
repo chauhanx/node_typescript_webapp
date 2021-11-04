@@ -2,10 +2,9 @@
 
 cd /home/ubuntu
 pwd
-mkdir l_webapp
-mv webapp /home/ubuntu/l_webapp/
+ls -la
 pwd
-cd /home/ubuntu/l_webapp/webapp
+sudo unzip webapp.zip
+ls -la
 pwd
-npm install
-npm test
+cd webapp
