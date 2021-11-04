@@ -2,7 +2,7 @@
 
 cd /home/ubuntu
 pwd
-ls -la
+ls -a
 sudo unzip webapp.zip
 ls -la
 pwd
