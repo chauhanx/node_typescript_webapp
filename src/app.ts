@@ -13,6 +13,8 @@ import bodyParser from 'body-parser';
 dotenv.config();
 
 if(!process.env.PORT){
+    console.log(process.env.PORT);
+    
     console.log("App exit");
     // process.exit();
 }
