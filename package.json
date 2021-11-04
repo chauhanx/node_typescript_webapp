@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "npm run build && ts-node-dev --respawn --pretty --transpile-only src/app.ts",
         "prod": "NODE_OPTIONS=--max-old-space-size=4096 ts-node-dev --respawn --pretty --transpile-only dist/src/app.js",
+        "prod1": "NODE_OPTIONS=--max-old-space-size=4096 pm2 start dist/src/app.js --name",
         "start": "npm run build && nodemon dist/src/app.js",
         "build": "tsc --project ./",
         "lint": "tslint -c tslint.json -p tsconfig.json",
