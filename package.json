@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "npm run build && ts-node-dev --respawn --pretty --transpile-only src/app.ts",
         "stag": "NODE_OPTIONS=--max-old-space-size=4096 ts-node-dev --respawn --pretty --transpile-only src/app.ts",
-        "prod": "NODE_OPTIONS=--max-old-space-size=4096 pm2 start ts-node -- -P tsconfig.json src/app.ts --name webapp --watch --ignore-watch 'node_modules'",
+        "prod": "NODE_OPTIONS=--max-old-space-size=4096 pm2 start src/app.ts --name webapp --watch --ignore-watch 'node_modules'",
         "restart": "pm2 restart webapp",
         "start": "npm run build && nodemon dist/src/app.js",
         "build": "tsc --project ./",
