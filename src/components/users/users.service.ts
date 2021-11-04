@@ -54,7 +54,7 @@ export const saveUser = async(data) =>{
 }
 
 // to update the user details based on username
-export const updateUser = async(data:IUser) =>{
+export const updateUser = async(data) =>{
     try{
 
         let search = {

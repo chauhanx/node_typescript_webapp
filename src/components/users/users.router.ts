@@ -59,13 +59,21 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
       let {username} = await getUserPassAuth(authHeader);
 
       let obj = {
-        username: username
+        username: username,
+        first_name:'',
+        last_name:'',
+        password:''
       };
       
-      if (req.body.first_name) obj['first_name'] = req.body.first_name;
-      if (req.body.last_name) obj['last_name'] = req.body.last_name;
-      if (req.body.password) obj['password'] = req.body.password;
-
+      if (req.body.first_name) obj.first_name = req.body.first_name;
+      if (req.body.last_name) obj.last_name = req.body.last_name;
+      if (req.body.password) obj.password = req.body.password;
+      // let resObj =  Object.entries(obj).reduce((a,[k,v]) => (v == null ? a : (a[k]=v, a)), {});
+      for (var prop in obj) {
+        if (obj[prop] == '' || obj[prop] === null || obj[prop] === undefined) {
+            delete obj[prop];
+        }
+    }
       const result = await UserService.updateUser(obj);
       res.status(result.statusCode).send(result);
     }
