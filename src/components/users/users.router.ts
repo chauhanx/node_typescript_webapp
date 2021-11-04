@@ -60,9 +60,9 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
 
       let obj = {
         username: username,
-        first_name:null,
-        last_name:null,
-        password:null
+        first_name:'',
+        last_name:'',
+        password:''
       };
       
       if (req.body.first_name) obj.first_name = req.body.first_name;
@@ -70,7 +70,7 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
       if (req.body.password) obj.password = req.body.password;
       // let resObj =  Object.entries(obj).reduce((a,[k,v]) => (v == null ? a : (a[k]=v, a)), {});
       for (var prop in obj) {
-        if (obj[prop] === null || obj[prop] === undefined) {
+        if (obj[prop] == '' || obj[prop] === null || obj[prop] === undefined) {
             delete obj[prop];
         }
     }
