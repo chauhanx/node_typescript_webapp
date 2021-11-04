@@ -6,23 +6,6 @@ files:
   - source: /
     destination: /home/ubuntu/webapp
 
-  
-
-# permissions:
-#   - object: /home/ubuntu
-#     owner: ubuntu
-#     group: ubuntu
-#     mode: 700
-#     type:
-#       - file
-#   - object: /home/ubuntu
-#     owner: ubuntu
-#     group: ubuntu
-#     mode: 700
-#     type:
-#       - directory
-
-
 
 hooks:
 
