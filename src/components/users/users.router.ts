@@ -68,9 +68,10 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
       if (req.body.first_name) obj.first_name = req.body.first_name;
       if (req.body.last_name) obj.last_name = req.body.last_name;
       if (req.body.password) obj.password = req.body.password;
-      // let resObj =  Object.entries(obj).reduce((a,[k,v]) => (v == null ? a : (a[k]=v, a)), {});
-      Object.keys(obj).forEach(k => (!obj[k] && obj[k] !== undefined) && delete obj[k]);
-      const result = await UserService.updateUser(obj);
+      // Object.keys(obj).forEach(k => obj[k] == null ? delete obj[k] : );
+      let resObj =  Object.entries(obj).reduce((a,[k,v]) => (v == null ? a : (a[k]=v, a)), {});
+      // Object.keys(obj).forEach(k => (!obj[k] && obj[k] !== undefined) && delete obj[k]);
+      const result = await UserService.updateUser(resObj);
       res.status(result.statusCode).send(result);
     }
   }
