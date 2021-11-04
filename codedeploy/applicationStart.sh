@@ -14,4 +14,5 @@ ls -a
 # sudo echo DB_DIALECT $DB_DIALECT>>.env
 # sudo echo BASIC_AUTH_USER=$BASIC_AUTH_USER>>.env
 # sudo echo BASIC_AUTH_PASS=$BASIC_AUTH_PASS>>.env
+source /etc/profile
 npm run prod
