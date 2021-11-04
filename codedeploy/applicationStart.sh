@@ -5,4 +5,4 @@ ls -a
 source /etc/profile
 
 ls -a
-sudo npm run prod
+pm2 start dist/src/app.js --name webapp
