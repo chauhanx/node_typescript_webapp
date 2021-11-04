@@ -3,6 +3,8 @@ cd /home/ubuntu/webapp
 # sudo kill -9 $(sudo lsof -t -i:3000)
 ls -a
 source /etc/profile
+sudo npm run build
+sudo chmod +x dist
 # sudo pm2 install typescript
 # sudo pm2 install ts-node
 echo **************************************************************
