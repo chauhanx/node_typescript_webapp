@@ -11,7 +11,7 @@ on:
     branches: [ main ]
 
 jobs:
-    ci_cd:
+    ci:
       runs-on: ubuntu-latest
       
       steps:
@@ -43,7 +43,7 @@ jobs:
           run: |
             mkdir codedeploy_artifact
             ls -al
-            zip -r ${{ env.ARTIFACT_NAME }} dist package.json codedeploy/*.sh appspec.yml tsconfig.json tslint.json src package-lock.json
+            zip -r ${{ env.ARTIFACT_NAME }} package.json codedeploy/*.sh appspec.yml tsconfig.json tslint.json src package-lock.json
             pwd
             ls -al
             mv ${{ env.ARTIFACT_NAME }}.* codedeploy_artifact
@@ -56,6 +56,11 @@ jobs:
         - name: Copy Artifacts to S3
           run: |
             aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
+        
+    cd:
+      runs-on: ubuntu-latest
+      needs: ci
+      steps:
         - name: Codedeploy API Call
           run: |
             output=$(aws deploy create-deployment \

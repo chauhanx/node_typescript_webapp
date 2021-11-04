@@ -9,5 +9,7 @@ pwd
 cd /home/ubuntu/webapp
 source /etc/profile
 sudo npm install
+sudo npm run build
+ls -a
 # sudo npm install nodemon -g
 # sudo nohup nodemon >> debug.log 2>&1 &
