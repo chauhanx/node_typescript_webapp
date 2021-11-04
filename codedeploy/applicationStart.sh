@@ -3,6 +3,7 @@ cd /home/ubuntu/webapp
 sudo kill -9 $(sudo lsof -t -i:3000)
 ls -a
 sudo touch .env
+chmod 777 .env
 ls -a
 echo PORT=$PORT>>.env
 echo DB_HOST=$DB_HOST>>.env
