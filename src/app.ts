@@ -20,6 +20,7 @@ if(!process.env.PORT){
 const app = express();
 
 const PORT =  process.env.PORT || 3000;
+console.log("******************" , process.env.DB_NAME);
 
 // configure database connectivity
 db.config();
