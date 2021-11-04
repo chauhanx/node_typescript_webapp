@@ -5,4 +5,4 @@ ls -a
 source /etc/profile
 
 ls -a
-npm run prod
+sudo npm run prod
