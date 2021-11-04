@@ -29,7 +29,7 @@ jobs:
         - name: Build Node project
           run: npm run build --if-present
         
-        - name: Test Node Checks
+        - name: Test Cases Checks
           run: npm test
 
         - name: Configure AWS credentials
