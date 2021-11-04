@@ -12,5 +12,6 @@ sudo npm install -g typescript
 sudo npm install -g ts-node
 echo "**************************************************************"
 
+
 # sudo npm install nodemon -g
 # sudo nohup nodemon >> debug.log 2>&1 &
