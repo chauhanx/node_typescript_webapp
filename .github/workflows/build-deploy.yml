@@ -1,13 +1,13 @@
 name: Build & Deploy application
 
 env:
-  ARTIFACT_NAME: abc
-  CODEDEPLOY_APPLICATION_NAME: mywebapp
-  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: mywebapp
+  ARTIFACT_NAME: webapp
+  CODEDEPLOY_APPLICATION_NAME: webapp
+  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: csye6225-webapp-deployment
   AWS_REGION: us-east-1
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 jobs:
@@ -18,25 +18,57 @@ jobs:
         - name: Checkout Repository
           uses: actions/checkout@v2
 
-        - uses: actions/setup-node@v2
+        - name: Setup NodeJS
+          uses: actions/setup-node@v2
           with:
             node-version: '14'
 
-        - run: npm install
-        - run: npm test
+        - name: Install Node Dependecy
+          run: npm ci
         
-        - name: Build Deployment artifacts
-        - run: |
-            mkdir codedeploy_artifact
+        - name: Build Node project
+          run: npm run build --if-present
+        
+        - name: Test Cases Checks
+          run: npm test
 
         - name: Configure AWS credentials
           uses: aws-actions/configure-aws-credentials@v1
           with:
-           aws-access-key: ${{ secrets.AWS_ACCESS_KEY_ID}}
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
            aws-region: ${{ secrets.AWS_REGION }}
+        
+        - name: Build Deployment artifacts
+          run: |
+            mkdir codedeploy_artifact
+            ls -al
+            zip -r ${{ env.ARTIFACT_NAME }} dist package.json codedeploy/*.sh appspec.yml tsconfig.json tslint.json package-lock.json
+            pwd
+            ls -al
+            mv ${{ env.ARTIFACT_NAME }}.* codedeploy_artifact
+            pwd
+            cd codedeploy_artifact
+            cd ..
+            pwd
+            ls -al
 
         - name: Copy Artifacts to S3
-        - run: |
-            aws s3 sync ./codedeploy_artifact s3://${{ secrets. S3_CODEDEPLOY_BUCKET}}
+          run: |
+            aws s3 sync ./codedeploy_artifact s3://${{secrets.S3_CODEDEPLOY_BUCKET}}
+        - name: Codedeploy API Call
+          run: |
+            output=$(aws deploy create-deployment \
+              --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+              --deployment-config-name CodeDeployDefault.AllAtOnce \
+              --deployment-group-name ${{ env.CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP }} \
+              --description "CSYE6225 - CodeDeploy" \
+              --s3-location bucket=${{ secrets.S3_CODEDEPLOY_BUCKET }},key=${{env.ARTIFACT_NAME}}.zip,bundleType=zip \
+              --region ${{ env.AWS_REGION }} \
+              --output json)
+
+              echo $output
+              
+              dId=$(echo $output | jq -r '.deploymentId')
+              aws deploy wait deployment-successful --deployment-id $dId
 

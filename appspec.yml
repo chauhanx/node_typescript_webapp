@@ -3,41 +3,23 @@ os: linux
 
 
 files:
-  - source: ./
-    destination: /home/ubuntu
-
-  
-
-permissions:
-  - object: /home/ubuntu
-    owner: ubuntu
-    group: ubuntu
-    mode: 700
-    type:
-      - file
-  - object: /home/ubuntu
-    owner: ubuntu
-    group: ubuntu
-    mode: 700
-    type:
-      - directory
-
+  - source: /
+    destination: /home/ubuntu/webapp
 
 
 hooks:
 
   BeforeInstall:
-    - location: ./beforeInstall.sh
+    - location: ./codedeploy/beforeInstall.sh
       timeout: 300
       runas: ubuntu
 
   AfterInstall:
-    - location: ./afterInstall.sh
+    - location: ./codedeploy/afterInstall.sh
       timeout: 300
       runas: ubuntu
 
-
   ApplicationStart:
-    - location: ./applicationStart.sh
+    - location: ./codedeploy/applicationStart.sh
       timeout: 300
       runas: ubuntu
