@@ -43,7 +43,7 @@ jobs:
           run: |
             mkdir codedeploy_artifact
             ls -al
-            zip -r ${{ env.ARTIFACT_NAME }} package.json codedeploy/*.sh appspec.yml tsconfig.json tslint.json src package-lock.json
+            zip -r ${{ env.ARTIFACT_NAME }} package.json dist codedeploy/*.sh appspec.yml tsconfig.json tslint.json src package-lock.json
             pwd
             ls -al
             mv ${{ env.ARTIFACT_NAME }}.* codedeploy_artifact

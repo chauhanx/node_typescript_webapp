@@ -47,3 +47,4 @@ export default class User extends Model implements IUser{
     account_updated: Date;
 
 }
+
