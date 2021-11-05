@@ -1,6 +1,5 @@
 
 import { Sequelize } from 'sequelize-typescript'
-import path from 'path'; 
 import { appConfigs } from './config';
 import User from '../components/users/users.model';
 import Image from '../components/image/image.model';
