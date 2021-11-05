@@ -12,8 +12,8 @@ const config = () => {
     
     console.error("database connected successfully!");
     try {
-        // await sequelize.sync({force: true})
-        await sequelize.sync()
+        await sequelize.sync({force: true})
+        // await sequelize.sync()
         console.log("sycn doneß");
     } catch (error) {
         console.log(error)
