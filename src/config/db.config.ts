@@ -20,6 +20,5 @@ export const sequelize = new Sequelize(`${appConfigs.db.DB_NAME}`, `${appConfigs
   dialect: 'postgres',
   models: [User,Image]
 })
-
 sequelize.addModels([User,Image])
 export default {config};
