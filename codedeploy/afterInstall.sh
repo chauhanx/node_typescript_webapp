@@ -15,4 +15,4 @@ echo "**************************************************************"
 # mkdir /home/ubuntu/logs
 sudo npm install nodemon -g
 sudo nohup nodemon >> debug.log 2>&1 &
-sudo apt install node-typescript
+# sudo apt install node-typescript
