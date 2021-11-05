@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 import { RESPONSE } from './constants';
 import AWS from 'aws-sdk';
 import { appConfigs }  from '../config/config';
-// const BUCKET_NAME = appConfigs.s3.BUCKET_NAME;
 
 // to generate uuid for each user added
 export const generateId = ()=>{
@@ -61,7 +60,7 @@ export const upload_s3 = async(file) => {
         
         const params = {
             Bucket: `${appConfigs.s3.BUCKET_NAME}`,
-            Key: `${fileName}.${file.mime}`,
+            Key: `${fileName}.${file.mime.split('/')[1]}`,
             Body: new Buffer(file.data,'base64'),
             ContentEncoding: 'base64',
             ContentType: file.mime

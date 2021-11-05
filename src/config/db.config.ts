@@ -5,8 +5,7 @@ import { appConfigs } from './config';
 import User from '../components/users/users.model';
 import Image from '../components/image/image.model';
 
-const models = path.join(__dirname, "../components/**/*.model.ts");
-
+// const models = path.join(__dirname, "../components/**/*.model.ts");
 
 const config = async() => {
   await sequelize.authenticate();
@@ -15,24 +14,6 @@ const config = async() => {
   console.log("sycn doneß");
 }
 
-// const config = () => {
-  
-//   sequelize.authenticate().then(async() => {
-    
-//     console.error("database connected successfully!");
-//     try {
-//         await sequelize.sync({force: true})
-//         // await sequelize.sync()
-//         console.log("sycn doneß");
-//     } catch (error) {
-//         console.log(error)
-//     }
-
-//   }).catch( (e: any) => {
-//     console.error("database connection error!");
-//       console.log(e.message)
-//   })
-// }
 
 export const sequelize = new Sequelize(`${appConfigs.db.DB_NAME}`, `${appConfigs.db.DB_USER}`, `${appConfigs.db.DB_PASS}`, {
   host: `${appConfigs.db.DB_HOST}`,
@@ -40,9 +21,6 @@ export const sequelize = new Sequelize(`${appConfigs.db.DB_NAME}`, `${appConfigs
   dialect: 'postgres',
   models: [User,Image]
 })
-console.log("*****************", models, "*************************");
 
 sequelize.addModels([User,Image])
-
-
 export default {config};
