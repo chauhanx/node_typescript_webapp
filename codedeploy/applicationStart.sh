@@ -5,4 +5,5 @@ ls -a
 source /etc/profile
 
 ls -a
-pm2 start dist/src/app.js --name webapp
+
+sudo pm2 start src/app.ts
