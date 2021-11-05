@@ -5,10 +5,10 @@
     "scripts": {
         "dev": "npm run build && ts-node-dev --respawn --pretty --transpile-only src/app.ts",
         "stag": "NODE_OPTIONS=--max-old-space-size=4096 nodemon src/app.ts",
-        "prod": "pm2 start src/app.ts --name webapp",
+        "prod": "sudo NODE_OPTIONS='--max-old-space-size = 4096 ' forever start ./forever/prod.json",
         "restart": "pm2 restart webapp",
-        "start": "npm run build && nodemon dist/src/app.js",
-        "build": "tsc --project ./",
+        "start": "nodemon dist/src/app.js",
+        "build": "NODE_OPTIONS='--max-old-space-size=4096' tsc --project ./",
         "lint": "tslint -c tslint.json -p tsconfig.json",
         "test": "mocha --recursive --exit"
     },
@@ -16,14 +16,10 @@
         "aws-sdk": "2.1014.0",
         "bcryptjs": "2.4.3",
         "body-parser": "1.18.3",
-        "busboy": "0.3.1",
         "chai": "4.3.4",
-        "cookie-parser": "~1.4.4",
         "cors": "2.8.5",
-        "debug": "~2.6.9",
         "dotenv": "10.0.0",
         "express": "4.16.4",
-        "hbs": "~4.0.4",
         "helmet": "4.6.0",
         "http": "0.0.1-security",
         "http-errors": "~1.6.3",
@@ -36,7 +32,6 @@
         "reflect-metadata": "0.1.13",
         "sequelize": "6.6.5",
         "sequelize-typescript": "2.1.0",
-        "swagger-ui-express": "4.1.6",
         "uuid": "8.3.2"
     },
     "devDependencies": {
