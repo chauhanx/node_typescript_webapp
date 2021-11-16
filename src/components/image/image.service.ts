@@ -130,7 +130,7 @@ export const uploadUserImage = async(data) =>{
                 return respMsg(201,MESSAGES.IMAGE_ADDED_SUCCESS,[result['dataValues']]);
 
             }else{
-                return respMsg(400,MESSAGES.BAD_REQUEST,[]);
+                return respMsg(400,MESSAGES.BAD_REQUEST,[s3Data]);
             }
 
         }else{
