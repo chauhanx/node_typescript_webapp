@@ -5,6 +5,8 @@ env:
   CODEDEPLOY_APPLICATION_NAME: webapp
   CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP: csye6225-webapp-deployment
   AWS_REGION: us-east-1
+  ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID}}
+  SECRET_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
 
 on:
   push:
