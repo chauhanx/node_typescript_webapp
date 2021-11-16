@@ -40,7 +40,7 @@ imageRouter.post('/', async (req: Request, res: Response) => {
       
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
         
-        res.status(msg.statusCode).send(msg);
+        res.status(msg.statusCode).send("1");
     }else{
         let authHeader = req.headers.authorization;
       
@@ -53,7 +53,7 @@ imageRouter.post('/', async (req: Request, res: Response) => {
     
         const result = await ImageService.uploadUserImage(obj);
         // result['upload_date'] = getDateFormat(result['upload_date']);
-        res.status(result.statusCode).send(result);
+        res.status(result.statusCode).send("result");
     } 
    
 
