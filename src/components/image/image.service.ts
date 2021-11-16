@@ -110,11 +110,11 @@ export const uploadUserImage = async(data) =>{
         if(user){
 
             const s3Data = await upload_s3(data.file);
-            let fileExt = data.file.mime.split("/")[1]; 
+            // let fileExt = data.file.mime.split("/")[1]; 
             if(s3Data){
                 
                 let obj = {
-                    file_name:`${s3Data.Key}.${fileExt}`,
+                    file_name:`${s3Data.Key}`,
                     id:generateId(),
                     url:s3Data.Location,
                     user_id:user['dataValues'].id,
