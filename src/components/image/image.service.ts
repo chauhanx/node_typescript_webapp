@@ -3,9 +3,13 @@ import Image from './image.model';
 import User from '../users/users.model';
 import { generateId, ecryptPass, respMsg, upload_s3 , delete_s3} from '../../utils/helper';
 import { MESSAGES } from '../../utils/constants';
+import SDC from 'statsd-client';
+const sdc = new SDC({host: 'localhost', port: 8125});
 
 // to fetch user details based on username
 export const getUserImage  = async(data) => {
+    sdc.increment('image_get');
+    let startTime = new Date().valueOf();
     try{
         let search = {
             where:{
@@ -14,6 +18,8 @@ export const getUserImage  = async(data) => {
         }
 
         let user = await User.findOne(search);
+        let endTime = new Date().valueOf();
+        sdc.timing('db_image_find_timer', endTime-startTime);
         // to check if user exist with provided username
         if(user){
             let search = {
@@ -22,6 +28,8 @@ export const getUserImage  = async(data) => {
                 }
             }
             const image = await Image.findOne(search);
+            endTime = new Date().valueOf();
+            sdc.timing('db_image_find_timer', endTime-startTime);
             console.log(image);
             if(image){
                 // image['upload_date'] = getDateFormat(image['upload_date']);
@@ -45,6 +53,8 @@ export const getUserImage  = async(data) => {
 
 // to update the user details based on username
 export const deleteImage = async(data) =>{
+    sdc.increment('image_delete');
+    let startTime = new Date().valueOf();
     try{
         let search = {
             where:{
@@ -52,6 +62,8 @@ export const deleteImage = async(data) =>{
             }
         }
         const user = await User.findOne(search);
+        let endTime = new Date().valueOf();
+        sdc.timing('db_user_find_timer', endTime-startTime);
         // to check if user exits then update user details
         if(user){
             let imageSearch  = {
@@ -61,10 +73,13 @@ export const deleteImage = async(data) =>{
             }
 
             const image = await Image.findOne(imageSearch);
-
+            endTime = new Date().valueOf();
+            sdc.timing('db_image_find_timer', endTime-startTime);
             if(image){
                 if(image.metaData.Key){
                     const s3Delete = await delete_s3(image.metaData.Key);
+                    endTime = new Date().valueOf();
+                    sdc.timing('s3_image_delete_timer', endTime-startTime);
                     if(s3Delete){
                         let search = {
                             where:{
@@ -73,6 +88,8 @@ export const deleteImage = async(data) =>{
                         }
 
                         const result = await Image.destroy(search);
+                        endTime = new Date().valueOf();
+                        sdc.timing('db_image_delete_timer', endTime-startTime);
                         if(result){
                             return respMsg(200,MESSAGES.IMAGE_DELETE_SUCCESS,[]);
                         }else{
@@ -98,18 +115,24 @@ export const deleteImage = async(data) =>{
 
 // to upload the user image
 export const uploadUserImage = async(data) =>{
+    sdc.increment('image_upload');
+    let startTime = new Date().valueOf();
     try{
-
+        let endTime;
         let search = {
             where:{
                 username:data.username
             }
         }
         const user = await User.findOne(search);
+        endTime = new Date().valueOf();
+        sdc.timing('db_user_find_timer', endTime-startTime);
         // to check if user exits then update user details
         if(user){
             
             const s3Data = await upload_s3(data.file);
+            endTime = new Date().valueOf();
+            sdc.timing('s3_image_upload_timer', endTime-startTime);
             console.log("after upload");
             console.log(s3Data);
             // let fileExt = data.file.mime.split("/")[1]; 
@@ -128,6 +151,8 @@ export const uploadUserImage = async(data) =>{
                 
                 const image = new Image(obj);
                 const result = await image.save();
+                endTime = new Date().valueOf();
+                sdc.timing('db_image_delete_timer', endTime-startTime);
                 delete result.metaData;
                 return respMsg(201,MESSAGES.IMAGE_ADDED_SUCCESS,[result['dataValues']]);
 
@@ -147,13 +172,18 @@ export const uploadUserImage = async(data) =>{
 
 
 export const updateImage = async(data) =>{
+    sdc.increment('image_update');
+    let startTime = new Date().valueOf();
     try{
         let search = {
             where:{
                 username:data.username
             }
         }
+        let end
         const user = await User.findOne(search);
+        let endTime = new Date().valueOf();
+        sdc.timing('db_image_update_timer', endTime-startTime);
         // to check if user exits then update user details
         if(user){
             let imageSearch  = {
@@ -163,13 +193,18 @@ export const updateImage = async(data) =>{
             }
 
             const image = await Image.findOne(imageSearch);
-
+            endTime = new Date().valueOf();
+            sdc.timing('db_image_find_timer', endTime-startTime);
             if(image){
                 if(image.metaData.Key){
                     await delete_s3(image.metaData.Key);
+                    let endTime = new Date().valueOf();
+                    sdc.timing('s3_image_delete_timer', endTime-startTime);
                 }
 
                 const s3Data = await upload_s3(data.file);
+                endTime = new Date().valueOf();
+                sdc.timing('s3_image_upload_timer', endTime-startTime);
                 let fileExt = data.file.mime.split("/")[1]; 
                 if(s3Data){
                     
@@ -181,6 +216,8 @@ export const updateImage = async(data) =>{
                     }
                     
                     const result = await image.save();
+                    endTime = new Date().valueOf();
+                    sdc.timing('db_image_create_timer', endTime-startTime);
                     return respMsg(201,MESSAGES.IMAGE_ADDED_SUCCESS,[result]);
                 }
                 
