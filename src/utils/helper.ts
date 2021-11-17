@@ -52,8 +52,10 @@ export const upload_s3 = async(file) => {
 
     try{
         let fileName = generateRandomString();
+        console.log("************************before config**************************");
         
         let s3bucket = new AWS.S3();
+        console.log("************************after config**************************");
         //     accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
         //     secretAccessKey: `${appConfigs.s3.SECRET_KEY}`
         // });
@@ -67,6 +69,7 @@ export const upload_s3 = async(file) => {
         };
 
         try{
+            console.log("************************before s3 upload**************************");
             return await s3bucket.upload(params).promise();
         }catch(err){
             console.log(err);
