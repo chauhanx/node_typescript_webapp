@@ -3,15 +3,20 @@ import * as ImageService from './image.service';
 import { respMsg, getUserPassAuth } from '../../utils/helper';
 import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
+import SDC from 'statsd-client';
+const sdc = new SDC({host: 'localhost', port: 8125});
 
 export const imageRouter = express.Router();
 
 imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
+  sdc.increment('image_get');
+  let startTime = new Date().valueOf();
   try {
     if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
       
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
-        
+        let endTime = new Date().valueOf();
+        sdc.timing('image_get_timer', endTime-startTime);
         res.status(msg.statusCode).send(msg);
     }else{
 
@@ -23,23 +28,28 @@ imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
       };
       
       const result = await ImageService.getUserImage(obj);
-      
+      let endTime = new Date().valueOf();
+      sdc.timing('image_get_timer', endTime-startTime);
       res.status(200).send(result);
     
     }
   }
   catch (e) {
+    let endTime = new Date().valueOf();
+    sdc.timing('image_get_timer', endTime-startTime);
     res.status(500).send(e);
   }
 });
 
 imageRouter.post('/', async (req: Request, res: Response) => {
+  sdc.increment('image_add');
+  let startTime = new Date().valueOf();
   try {
-
     if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
       
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
-        
+        let endTime = new Date().valueOf();
+        sdc.timing('image_add_timer', endTime-startTime);
         res.status(msg.statusCode).send(msg);
     }else{
         let authHeader = req.headers.authorization;
@@ -53,22 +63,27 @@ imageRouter.post('/', async (req: Request, res: Response) => {
     
         const result = await ImageService.uploadUserImage(obj);
         // result['upload_date'] = getDateFormat(result['upload_date']);
+        let endTime = new Date().valueOf();
+        sdc.timing('image_add_timer', endTime-startTime);
         res.status(result.statusCode).send(result);
     } 
-   
-
   }
   catch (e) {
+    let endTime = new Date().valueOf();
+    sdc.timing('image_add_timer', endTime-startTime);
     res.status(500).send(e);
   }
 });
 
 imageRouter.delete('/', auth, async (req: Request, res: Response) => {
+  sdc.increment('image_delete');
+  let startTime = new Date().valueOf();
   try {
     if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
       
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
-        
+        let endTime = new Date().valueOf();
+        sdc.timing('image_delete_timer', endTime-startTime);
         res.status(msg.statusCode).send(msg);
     }else{
         let authHeader = req.headers.authorization;
@@ -79,15 +94,21 @@ imageRouter.delete('/', auth, async (req: Request, res: Response) => {
         };
 
         const result = await ImageService.deleteImage(obj);
+        let endTime = new Date().valueOf();
+        sdc.timing('image_delete_timer', endTime-startTime);
         res.status(result.statusCode).send(result);
     }
   }
   catch (e) {
+    let endTime = new Date().valueOf();
+    sdc.timing('image_delete_timer', endTime-startTime);
     res.status(500).send(e);
   }
 });
 
 imageRouter.patch('/', auth, async (req: Request, res: Response) => {
+  sdc.increment('image_update');
+  let startTime = new Date().valueOf();
     try {
         if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
       
@@ -104,10 +125,14 @@ imageRouter.patch('/', auth, async (req: Request, res: Response) => {
             };
         
             const result = await ImageService.updateImage(obj);
+            let endTime = new Date().valueOf();
+            sdc.timing('image_update_timer', endTime-startTime);
             res.status(result.statusCode).send(result);
         }
     }
     catch (e) {
+      let endTime = new Date().valueOf();
+      sdc.timing('image_update_timer', endTime-startTime);
       res.status(500).send(e);
     }
   });
