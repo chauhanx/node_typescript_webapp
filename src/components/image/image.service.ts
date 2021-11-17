@@ -108,7 +108,6 @@ export const uploadUserImage = async(data) =>{
         const user = await User.findOne(search);
         // to check if user exits then update user details
         if(user){
-            console.log("before upload");
             
             const s3Data = await upload_s3(data.file);
             console.log("after upload");

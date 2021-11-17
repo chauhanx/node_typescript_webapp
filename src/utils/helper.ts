@@ -52,10 +52,8 @@ export const upload_s3 = async(file) => {
 
     try{
         let fileName = generateRandomString();
-        console.log("************************before config**************************");
         
         let s3bucket = new AWS.S3();
-        console.log("************************after config**************************");
         //     accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
         //     secretAccessKey: `${appConfigs.s3.SECRET_KEY}`
         // });
