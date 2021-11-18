@@ -31,7 +31,8 @@ export const appConfigs =  {
     s3:{
       BUCKET_NAME: process.env.BUCKET_NAME,
       ACCESS_KEY: process.env.ACCESS_KEY,
-      SECRET_KEY: process.env.SECRET_KEY
+      SECRET_KEY: process.env.SECRET_KEY,
+      AWS_REGION: process.env.AWS_REGION,
     }
   };
 
