@@ -5,12 +5,12 @@ import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
 // import SDC from 'statsd-client';
 // const sdc = new SDC({host: 'localhost', port: 8125});
-// import {logger} from '../../../config/winston'
+import {logger} from '../../../config/winston';
 export const imageRouter = express.Router();
 import StatsD from 'node-statsd';
 var sdc = new StatsD();
-import {log} from '../../config/log'
-const logger = log.getLogger('logs');
+// import {log} from '../../config/log'
+// const logger = log.getLogger('logs');
 
 imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
   try {
