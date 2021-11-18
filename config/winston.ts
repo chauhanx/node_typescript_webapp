@@ -3,7 +3,7 @@ import winston from 'winston';
 var options = {
     file: {
         // level: 'info',
-        filename: `../logs/csye6225.log`
+        filename: `logs/csye6225.log`
         // handleExceptions: true,
         // json: true,
         // maxsize: 4194304,
