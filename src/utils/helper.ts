@@ -53,10 +53,10 @@ export const upload_s3 = async(file) => {
     try{
         let fileName = generateRandomString();
         
-        let s3bucket = new AWS.S3({
-            accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
-            secretAccessKey: `${appConfigs.s3.SECRET_KEY}`
-        });
+        let s3bucket = new AWS.S3();
+        //     accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
+        //     secretAccessKey: `${appConfigs.s3.SECRET_KEY}`
+        // });
         
         const params = {
             Bucket: `${appConfigs.s3.BUCKET_NAME}`,
@@ -83,10 +83,10 @@ export const delete_s3 = async(key) => {
 
     try{
         
-        let s3bucket = new AWS.S3({
-            accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
-            secretAccessKey: `${appConfigs.s3.SECRET_KEY}`
-        });
+        let s3bucket = new AWS.S3();
+        //     accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
+        //     secretAccessKey: `${appConfigs.s3.SECRET_KEY}`
+        // });
         
         const params = {
             Bucket: `${appConfigs.s3.BUCKET_NAME}`,

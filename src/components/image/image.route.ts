@@ -5,7 +5,7 @@ import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
 import SDC from 'statsd-client';
 const sdc = new SDC({host: 'localhost', port: 8125});
-
+import {logger} from '../../../config/winston'
 export const imageRouter = express.Router();
 
 imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
@@ -13,13 +13,13 @@ imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
   let startTime = new Date().valueOf();
   try {
     if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
-      
+        logger.info('Image get Bad Request');
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
         let endTime = new Date().valueOf();
         sdc.timing('image_get_timer', endTime-startTime);
         res.status(msg.statusCode).send(msg);
     }else{
-
+      logger.info('Get Image details');
       let authHeader = req.headers.authorization;
       let {username} = await getUserPassAuth(authHeader);
       
@@ -35,6 +35,7 @@ imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
     }
   }
   catch (e) {
+    logger.error('Error Getting Image details');
     let endTime = new Date().valueOf();
     sdc.timing('image_get_timer', endTime-startTime);
     res.status(500).send(e);
@@ -46,12 +47,13 @@ imageRouter.post('/', async (req: Request, res: Response) => {
   let startTime = new Date().valueOf();
   try {
     if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
-      
+        logger.info('Post Image details bad request');
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
         let endTime = new Date().valueOf();
         sdc.timing('image_add_timer', endTime-startTime);
         res.status(msg.statusCode).send(msg);
     }else{
+        logger.info('Post Image details');
         let authHeader = req.headers.authorization;
       
         let {username} = await getUserPassAuth(authHeader);
@@ -69,6 +71,7 @@ imageRouter.post('/', async (req: Request, res: Response) => {
     } 
   }
   catch (e) {
+    logger.error('Error Post Image details');
     let endTime = new Date().valueOf();
     sdc.timing('image_add_timer', endTime-startTime);
     res.status(500).send(e);
@@ -80,12 +83,13 @@ imageRouter.delete('/', auth, async (req: Request, res: Response) => {
   let startTime = new Date().valueOf();
   try {
     if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
-      
+        logger.info('Delete Image details bad request');
         const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
         let endTime = new Date().valueOf();
         sdc.timing('image_delete_timer', endTime-startTime);
         res.status(msg.statusCode).send(msg);
     }else{
+        logger.info('Delete Image details');
         let authHeader = req.headers.authorization;
         let {username} = await getUserPassAuth(authHeader);
 
@@ -100,6 +104,7 @@ imageRouter.delete('/', auth, async (req: Request, res: Response) => {
     }
   }
   catch (e) {
+    logger.error('Error Delete Image details');
     let endTime = new Date().valueOf();
     sdc.timing('image_delete_timer', endTime-startTime);
     res.status(500).send(e);
@@ -111,11 +116,12 @@ imageRouter.patch('/', auth, async (req: Request, res: Response) => {
   let startTime = new Date().valueOf();
     try {
         if (req.body.file_name || req.body.id || req.body.url || req.body.upload_date || req.body.user_id) {
-      
+            logger.info('Update Image details bad request');
             const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
             
             res.status(msg.statusCode).send(msg);
         }else{
+            logger.info('Update Image details');
             let authHeader = req.headers.authorization;
             let {username} = await getUserPassAuth(authHeader);
 
@@ -131,6 +137,7 @@ imageRouter.patch('/', auth, async (req: Request, res: Response) => {
         }
     }
     catch (e) {
+      logger.error('Error Update Image details');
       let endTime = new Date().valueOf();
       sdc.timing('image_update_timer', endTime-startTime);
       res.status(500).send(e);

@@ -6,15 +6,13 @@ import { auth } from '../../utils/auth';
 import SDC from 'statsd-client';
 const sdc = new SDC({host: 'localhost', port: 8125});
 export const userRouter = express.Router();
-
-// import StatsD from 'node-statsd';
-// var client = new StatsD();
+import {logger} from '../../../config/winston'
 
 userRouter.get('/',auth, async ( req: Request, res: Response,next) => {
   sdc.increment('user_get');
   let startTime = new Date().valueOf();
   try {
-    
+      logger.info('Get user details');
       let authHeader = req.headers.authorization;
       let {username} = await getUserPassAuth(authHeader);
       
@@ -28,6 +26,7 @@ userRouter.get('/',auth, async ( req: Request, res: Response,next) => {
       res.status(200).send(result);
   }
   catch (e) {
+    logger.error('Error get user details');
     let endTime = new Date().valueOf();
     sdc.timing('user_get_timer', endTime-startTime);
     res.status(500).send(e);
@@ -39,7 +38,7 @@ userRouter.post('/', async (req: Request, res: Response) => {
   sdc.increment('user_add');
   let startTime = new Date().valueOf();
   try {
-
+    logger.info('Add new user details');
     if (!req.body.first_name || !req.body.last_name || !req.body.password || !req.body.username || !checkValidEmail(req.body.username)) {
 
       const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
@@ -58,6 +57,7 @@ userRouter.post('/', async (req: Request, res: Response) => {
     }
   }
   catch (e) {
+    logger.error('Error add new user details');
     let endTime = new Date().valueOf();
     sdc.timing('user_add_timer', endTime-startTime);
     res.status(500).send(e);
@@ -68,6 +68,7 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
   sdc.increment('user_update');
   let startTime = new Date().valueOf();
   try {
+    logger.info('Update user details');
     if (req.body.id || req.body.account_updated || req.body.account_created) {
       
       const msg = await respMsg(400, MESSAGES.BAD_REQUEST, []);
@@ -101,6 +102,7 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
     }
   }
   catch (e) {
+    logger.info('Error Updating user details');
     let endTime = new Date().valueOf();
     sdc.timing('user_update_timer', endTime-startTime);
     res.status(500).send(e);
