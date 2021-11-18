@@ -3,11 +3,7 @@ import * as UserService from './users.service';
 import { respMsg, getUserPassAuth, checkValidEmail } from '../../utils/helper';
 import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
-// import SDC from 'statsd-client';
-// const sdc = new SDC({host: 'localhost', port: 8125});
 export const userRouter = express.Router();
-// import {log} from '../../config/log'
-// const logger = log.getLogger('logs');
 import {logger} from '../../../config/winston';
 import StatsD from 'node-statsd';
 var sdc = new StatsD();
