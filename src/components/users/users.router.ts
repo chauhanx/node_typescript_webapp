@@ -6,7 +6,8 @@ import { auth } from '../../utils/auth';
 // import SDC from 'statsd-client';
 // const sdc = new SDC({host: 'localhost', port: 8125});
 export const userRouter = express.Router();
-import {logger} from '../../../config/winston'
+import {log} from '../../config/log'
+const logger = log.getLogger('logs');
 import StatsD from 'node-statsd';
 var sdc = new StatsD();
 // import log from '../../'
