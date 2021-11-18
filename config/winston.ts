@@ -22,14 +22,14 @@ const logFormat = winston.format.combine(
     winston.format.timestamp(),
     winston.format.align(),
     winston.format.printf(
-        info => `TIMESTAMP: ${info.timestamp}, LEVEL:  ${info.level}, MESSAGE: ${info.message}`
+        info => `LABEL: ${info.label}, LEVEL:  ${info.level},TIMESTAMP: ${info.timestamp}, MESSAGE: ${info.message}`
     )
 );
 
 export const logger =  winston.createLogger({
     format: logFormat,
     transports: [
-        new winston.transports.File(options.file),
+        new winston.transports.File({filename:"logs/csye6225.log"}),
         new winston.transports.Console(options.console)
     ],
     exitOnError: false,
