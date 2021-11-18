@@ -2,9 +2,8 @@ import { IUser } from './users.model';
 import User from './users.model';
 import { generateId, ecryptPass, respMsg} from '../../utils/helper';
 import { MESSAGES } from '../../utils/constants';
-import SDC from 'statsd-client';
-const sdc = new SDC({host: 'localhost', port: 8125});
-
+import StatsD from 'node-statsd';
+var sdc = new StatsD();
 export const getUser  = async(data) => {
     try{
         let search = {
