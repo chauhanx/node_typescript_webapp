@@ -5,7 +5,6 @@ import { MESSAGES } from '../../utils/constants';
 import SDC from 'statsd-client';
 const sdc = new SDC({host: 'localhost', port: 8125});
 
-// to fetch user details based on username
 export const getUser  = async(data) => {
     try{
         let search = {
@@ -69,7 +68,6 @@ export const saveUser = async(data) =>{
 // to update the user details based on username
 export const updateUser = async(data) =>{
     try{
-
         let search = {
             where:{
                 username:data.username
