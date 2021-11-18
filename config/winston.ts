@@ -69,7 +69,7 @@ export const logger =  winston.createLogger({
         awsConfig: {
             accessKeyId: `${appConfigs.s3.ACCESS_KEY}`,
             secretAccessKey: `${appConfigs.s3.SECRET_KEY}`,
-            region: process.env.CLOUDWATCH_REGION
+            region: `us-east-1`
         },
         formatLog: item =>
           `${item.level}: ${item.message} ${JSON.stringify(item.meta)}`
