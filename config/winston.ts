@@ -29,7 +29,7 @@ const logFormat = winston.format.combine(
 export const logger =  winston.createLogger({
     format: logFormat,
     transports: [
-        new winston.transports.File({filename:`${appRoot}/logs/csye6225.log`}),
+        new winston.transports.File({filename:`logs/csye6225.log`}),
         new winston.transports.Console(options.console)
     ],
     exitOnError: false,
