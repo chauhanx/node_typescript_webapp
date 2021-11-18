@@ -9,6 +9,7 @@ export const userRouter = express.Router();
 import {logger} from '../../../config/winston'
 import StatsD from 'node-statsd';
 var sdc = new StatsD();
+// import log from '../../'
 
 
 userRouter.get('/',auth, async ( req: Request, res: Response,next) => {
