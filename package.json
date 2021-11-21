@@ -11,6 +11,7 @@
         "build": "NODE_OPTIONS='--max-old-space-size=4096' tsc --project ./",
         "lint": "tslint -c tslint.json -p tsconfig.json",
         "test": "mocha --recursive --exit"
+
     },
     "dependencies": {
         "app-root-path": "3.0.0",
