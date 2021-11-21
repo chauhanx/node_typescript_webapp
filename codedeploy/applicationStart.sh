@@ -4,7 +4,7 @@ sudo kill -9 $(sudo lsof -t -i:3000)
 ls -a
 source /etc/profile
 ls -a
-/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ubuntu/webapp/cloudwatch-config.json -s
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/home/ubuntu/webapp/cloudwatch-config.json -s
 sudo chmod 775 /home/ubuntu/webapp/logs/csye6225.log
 pm2 start dist/src/app.js
 pm2 startup systemd
