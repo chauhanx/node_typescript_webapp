@@ -5,8 +5,10 @@ import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
 export const userRouter = express.Router();
 import {logger} from '../../../config/winston';
-import StatsD from 'node-statsd';
-var sdc = new StatsD();
+// import StatsD from 'node-statsd';
+import SDC from 'statsd-client';
+const sdc = new SDC({host: 'localhost', port: 8125});
+// var sdc = new StatsD();
 
 
 userRouter.get('/',auth, async ( req: Request, res: Response,next) => {
