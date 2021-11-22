@@ -5,8 +5,10 @@ import { MESSAGES } from '../../utils/constants';
 import { auth } from '../../utils/auth';
 import {logger} from '../../../config/winston';
 export const imageRouter = express.Router();
-import StatsD from 'node-statsd';
-var sdc = new StatsD();
+// import StatsD from 'node-statsd';
+// var sdc = new StatsD();
+import SDC from 'statsd-client';
+const sdc = new SDC({host: 'localhost', port: 8125});
 
 imageRouter.get('/',auth, async ( req: Request, res: Response,next) => {
   try {

@@ -23,3 +23,8 @@ hooks:
     - location: ./codedeploy/applicationStart.sh
       timeout: 300
       runas: ubuntu
+
+  ApplicationStop:
+    - location: ./codedeploy/applicationStop.sh
+      timeout: 300
+      runas: ubuntu
