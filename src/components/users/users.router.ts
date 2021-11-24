@@ -106,3 +106,22 @@ userRouter.patch('/', auth, async (req: Request, res: Response) => {
   }
 });
 
+userRouter.get('/verifyUserEmail',auth, async ( req: Request, res: Response,next) => {
+  try {
+      if(!req.query.email){
+        res.status(500).send(MESSAGES.INVALID_USER);
+      }
+    
+      let obj = {
+        username: req.query.email
+      };
+      
+      const result = await UserService.verifyUserEmail(obj);
+      res.status(200).send(result);
+  }
+  catch (e) {
+    logger.error('Error get user details  ' + req.ip);
+    res.status(500).send(e);
+  }
+});
+

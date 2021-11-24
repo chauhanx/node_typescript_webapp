@@ -104,3 +104,53 @@ export const delete_s3 = async(key) => {
     }
      
 }
+
+
+export const add_dynamo_data = async(data) => {
+    try{
+        
+        var docClient = new AWS.DynamoDB.DocumentClient();
+        let table = "dynamo";
+
+        const params = {
+            TableName:table,
+            Item:{
+                "username": data.email,
+                "token": data.token
+            }
+        };
+
+        const result = await docClient.put(params);
+        if(result) return true;
+        return false;
+
+    }catch(e){
+        return await respMsg(500,'',[e]);
+    }
+}
+
+export const get_dynamo_data = async(data) => {
+    try{
+        
+        var docClient = new AWS.DynamoDB.DocumentClient();
+        let table = "dynamo";
+
+        const params = {
+            TableName:table,
+            Key:{
+                "username": data.email
+            }
+        };
+
+        const result = await docClient.get(params);
+        if(result){
+
+        }else{
+            return await respMsg(500,'Data not exits in dynamo db',[]);
+        }
+
+
+    }catch(e){
+        return await respMsg(500,'',[e]);
+    }
+}

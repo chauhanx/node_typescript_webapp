@@ -1,4 +1,4 @@
-import { Model, Table, AutoIncrement, PrimaryKey, Column, AllowNull, NotEmpty, CreatedAt, UpdatedAt } from "sequelize-typescript";
+import { Model, Table, PrimaryKey, Column, AllowNull, NotEmpty, CreatedAt, UpdatedAt, Default } from "sequelize-typescript";
 
 export interface IUser{
     id?: string
@@ -6,6 +6,8 @@ export interface IUser{
     last_name?: string
     username?: string
     password?: string
+    verified?: boolean
+    verified_on?: Date
 }
 
 @Table(
@@ -45,6 +47,13 @@ export default class User extends Model implements IUser{
 
     @UpdatedAt
     account_updated: Date;
+
+    @Default(false)
+    @Column
+    verified: boolean;
+
+    @Column
+    verified_on: Date;
 
 }
 

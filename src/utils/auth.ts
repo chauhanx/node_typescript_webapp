@@ -28,6 +28,13 @@ export const auth = async(req,res,next) => {
         
         let user = await User.findOne(search);
         if(user){
+            if(!user.verified){
+                let result = await respMsg(401,MESSAGES.UNVERIFIED,[]);
+                res.statusCode = 401;
+                res.setHeader('WWW-Authenticate', 'Basic realm="unverified request"');
+                res.json(result);
+            }
+            
             let isValidPass = await comparePass(password,user.password);
             if(isValidPass) next();
             else{
