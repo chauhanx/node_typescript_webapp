@@ -1,7 +1,8 @@
 import { IUser } from './users.model';
 import User from './users.model';
-import { generateId, ecryptPass, respMsg} from '../../utils/helper';
+import { generateId, ecryptPass, respMsg, add_dynamo_data, get_dynamo_data} from '../../utils/helper';
 import { MESSAGES } from '../../utils/constants';
+import randomToken from 'random-token';
 import StatsD from 'node-statsd';
 var sdc = new StatsD();
 export const getUser  = async(data) => {
@@ -47,6 +48,16 @@ export const saveUser = async(data) =>{
         if(userExist){
             return await respMsg(400,MESSAGES.USER_EXIST,[]);
         }else{
+            let dynamoObj = {
+                username : data.username,
+                token:randomToken(16)
+            }
+            const dynamo_res = await add_dynamo_data(dynamoObj);
+
+            if(!dynamo_res){
+                return await respMsg(201,MESSAGES.UNVERIFIED,[]);
+            }
+
             data['id'] = await generateId();
             data['password'] = await ecryptPass(data['password']);
             const user = new User(data);
@@ -104,6 +115,38 @@ export const formatUser = async(data)=>{
     try{
         if(data['password']) delete data['password'];
         return data;
+    }catch(e){
+        return await respMsg(500,'',[e]);
+    }
+}
+
+
+
+// to verify the user by email link click
+export const verifyUserEmail = async(data) =>{
+    try{
+        let search = {
+            where:{
+                username:data.username
+            }
+        }
+        const user = await User.findOne(search);
+        // to check if user exits then update user details
+        if(user){
+            if(user.verified){
+                return respMsg(200,MESSAGES.USER_VERIFIED_ALREADY,[]);
+            }
+
+            user.verified = true;
+            user.verified_on = new Date();
+            const result =  await user.save();
+            const userData = await formatUser(result['dataValues']);
+
+            return respMsg(200,MESSAGES.USER_VERIFIED_SUCCESS,[userData]);
+        }else{
+            return respMsg(401,MESSAGES.USER_NOT_EXIST,[]);
+        }
+        
     }catch(e){
         return await respMsg(500,'',[e]);
     }
