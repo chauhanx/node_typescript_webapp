@@ -115,7 +115,7 @@ export const add_dynamo_data = async(data) => {
         const params = {
             TableName:table,
             Item:{
-                "email": data.email,
+                "email": data.username,
                 "token": data.token
             }
         };
@@ -143,7 +143,7 @@ export const get_dynamo_data = async(data) => {
         const params = {
             TableName:table,
             Key:{
-                "email": data.email
+                "email": data.username
             }
         };
         console.log("*******------********************");
