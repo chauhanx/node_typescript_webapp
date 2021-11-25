@@ -109,7 +109,7 @@ export const delete_s3 = async(key) => {
 export const add_dynamo_data = async(data) => {
     try{
         
-        var docClient = new AWS.DynamoDB.DocumentClient({region:'us-east-1',endpoint: "http://localhost:8000"});
+        var docClient = new AWS.DynamoDB.DocumentClient({region:'us-east-1'});
         let table = "dynamo";
 
         const params = {
@@ -123,11 +123,18 @@ export const add_dynamo_data = async(data) => {
         console.log("***************************");
         console.log(params);
         
+        docClient.put(params, function(err, data) {
+            if (err) {
+              console.log("Error", err);
+            } else {
+              console.log("Success", data);
+            }
+          });
         
-        const result = await docClient.put(params);
-        console.log(result);
-        if(result) return true;
-        return false;
+        // const result = await docClient.put(params);
+        // console.log(result);
+        // if(result) return true;
+        // return false;
 
     }catch(e){
         return await respMsg(500,'',[e]);
@@ -137,7 +144,7 @@ export const add_dynamo_data = async(data) => {
 export const get_dynamo_data = async(data) => {
     try{
         
-        var docClient = new AWS.DynamoDB.DocumentClient({region:'us-east-1',endpoint: "http://localhost:8000"});
+        var docClient = new AWS.DynamoDB.DocumentClient({region:'us-east-1'});
         let table = "dynamo";
 
         const params = {
@@ -148,6 +155,7 @@ export const get_dynamo_data = async(data) => {
         };
         console.log("*******------********************");
         console.log(params);
+
         const result = await docClient.get(params);
         if(result){
             console.log(result, " kdkdk");
