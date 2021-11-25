@@ -115,8 +115,8 @@ export const add_dynamo_data = async(data) => {
         const params = {
             TableName:table,
             Item:{
-                "email": data.username,
-                "token": data.token
+                "email": data.username
+                // "token": data.token
             }
         };
 
