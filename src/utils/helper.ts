@@ -109,7 +109,7 @@ export const delete_s3 = async(key) => {
 export const add_dynamo_data = async(data) => {
     try{
         
-        var docClient = new AWS.DynamoDB.DocumentClient();
+        var docClient = new AWS.DynamoDB.DocumentClient({region:'us-east-1'});
         let table = "dynamo";
 
         const params = {
@@ -137,7 +137,7 @@ export const add_dynamo_data = async(data) => {
 export const get_dynamo_data = async(data) => {
     try{
         
-        var docClient = new AWS.DynamoDB.DocumentClient();
+        var docClient = new AWS.DynamoDB.DocumentClient({region:'us-east-1'});
         let table = "dynamo";
 
         const params = {
