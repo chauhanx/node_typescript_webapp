@@ -115,12 +115,17 @@ export const add_dynamo_data = async(data) => {
         const params = {
             TableName:table,
             Item:{
-                "username": data.email,
+                "email": data.email,
                 "token": data.token
             }
         };
 
+        console.log("***************************");
+        console.log(params);
+        
+        
         const result = await docClient.put(params);
+        console.log(result);
         if(result) return true;
         return false;
 
@@ -138,13 +143,15 @@ export const get_dynamo_data = async(data) => {
         const params = {
             TableName:table,
             Key:{
-                "username": data.email
+                "email": data.email
             }
         };
-
+        console.log("*******------********************");
+        console.log(params);
         const result = await docClient.get(params);
         if(result){
-
+            console.log(result, " kdkdk");
+            
         }else{
             return await respMsg(500,'Data not exits in dynamo db',[]);
         }
